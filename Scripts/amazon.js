@@ -8,6 +8,7 @@ for(let i=0;i<products.length;i++){
     const star = products[i].rating.stars*10;
     const rating = products[i].rating.count;
     const price = products[i].priceCents;
+    const productID = products[i].id;
     const html=`
     <div class="product-container">
         <div class="product-image-container">
@@ -46,10 +47,33 @@ for(let i=0;i<products.length;i++){
             <img src="images/icons/checkmark.png">
             Added
         </div>
-        <button class="add-to-cart-button button-primary">
+        <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${productID}">
             Add to Cart
         </button>
     </div>`;
     productCardHTML += html;
 }
 document.querySelector('.js-products-grid').innerHTML=productCardHTML;
+
+// add to cart handling
+
+document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
+    button.addEventListener('click',()=>{
+        let item;
+        cart.forEach((c)=>{
+            if(c.id ==button.dataset.productId){
+                item=c;
+            }
+        });
+        if(item){
+            item.quantity +=1;
+        }
+        else{
+            cart.push({
+                id:button.dataset.productId,
+                quantity:1
+            });
+        }
+        console.log(cart);
+    });
+});

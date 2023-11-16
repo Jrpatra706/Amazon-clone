@@ -27,7 +27,7 @@ for(let i=0;i<products.length;i++){
             </div>
         </div>
         <div class="product-price">
-            $${price/100}
+            $${(price/100).toFixed(2)}
         </div>
         <div class="product-quantity-container">
             <select>

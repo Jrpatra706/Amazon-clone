@@ -1,5 +1,6 @@
 import { addToCart,cart } from "../data/cart.js";
 import { products } from "../data/products.js";
+import { moneyReflect } from "./utils/money.js";
 
 // html generation
 
@@ -27,7 +28,7 @@ for(let i=0;i<products.length;i++){
             </div>
         </div>
         <div class="product-price">
-            $${(price/100).toFixed(2)}
+            $${moneyReflect(price)}
         </div>
         <div class="product-quantity-container">
             <select>

@@ -15,7 +15,7 @@ cart.forEach((cItem) => {
   const price = matchingProduct.priceCents;
   const pquantity = cItem.quantity;
   const html = `
-    <div class="cart-item-container">
+    <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
     <div class="delivery-date">
       Delivery date: Tuesday, June 21
     </div>
@@ -100,6 +100,9 @@ document.querySelector(".js-order-summary").innerHTML = checkoutHTML;
 
 document.querySelectorAll(".js-delete-quantity-link").forEach((del) => {
   del.addEventListener('click', () => {
-    deleteFromCart(del.dataset.productId);
+    const productId = del.dataset.productId;
+    deleteFromCart(productId);
+    const deletedItem =document.querySelector(`.js-cart-item-container-${productId}`);
+    deletedItem.remove();
   });
 });

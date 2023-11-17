@@ -1,25 +1,23 @@
-import { cart } from "../data/cart.js";
+import { cart,deleteFromCart } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { moneyReflect } from "./utils/money.js";
 
-let checkoutHTML='';
-cart.forEach((cItem)=>{
-    let matchingProduct;
-    products.forEach((product)=>{
-        // console.log(product);
-        if(product.id === cItem.id){
-            // console.log(product.id);
-            matchingProduct=product;
-        }
-    });
-    const image = matchingProduct.image;
-    const pname = matchingProduct.name;
-    const price = matchingProduct.priceCents;
-    const pquantity = cItem.quantity;
-    const html = `
+let checkoutHTML = "";
+cart.forEach((cItem) => {
+  let matchingProduct;
+  products.forEach((product) => {
+    if (product.id === cItem.id) {
+      matchingProduct = product;
+    }
+  });
+  const image = matchingProduct.image;
+  const pname = matchingProduct.name;
+  const price = matchingProduct.priceCents;
+  const pquantity = cItem.quantity;
+  const html = `
     <div class="cart-item-container">
     <div class="delivery-date">
-        Delivery date: Tuesday, June 21
+      Delivery date: Tuesday, June 21
     </div>
 
     <div class="cart-item-details-grid">
@@ -28,10 +26,10 @@ cart.forEach((cItem)=>{
 
         <div class="cart-item-details">
         <div class="product-name">
-            ${pname}
+          ${pname}
         </div>
         <div class="product-price">
-            $${moneyReflect(price)}
+          $${moneyReflect(price)}
         </div>
         <div class="product-quantity">
             <span>
@@ -40,7 +38,9 @@ cart.forEach((cItem)=>{
             <span class="update-quantity-link link-primary">
             Update
             </span>
-            <span class="delete-quantity-link link-primary">
+            <span class="delete-quantity-link link-primary js-delete-quantity-link" data-product-id="${
+              matchingProduct.id
+            }">
             Delete
             </span>
         </div>
@@ -92,6 +92,14 @@ cart.forEach((cItem)=>{
         </div>
     </div>
     </div>`;
-    checkoutHTML +=html;
+  checkoutHTML += html;
 });
-document.querySelector('.js-order-summary').innerHTML=checkoutHTML;
+document.querySelector(".js-order-summary").innerHTML = checkoutHTML;
+
+// handling delte buttion
+
+document.querySelectorAll(".js-delete-quantity-link").forEach((del) => {
+  del.addEventListener('click', () => {
+    deleteFromCart(del.dataset.productId);
+  });
+});

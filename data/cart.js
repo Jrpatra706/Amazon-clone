@@ -1,5 +1,6 @@
+// loading cart from local storage when we open the page
 export let cart =JSON.parse(localStorage.getItem('cart'));
-
+// if cart doesn't exist will give a default value
 if (!cart){
     cart = [{
         id:'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
@@ -9,7 +10,7 @@ if (!cart){
         quantity:1
     }];
 }
-
+// function created to upade the cart after every update in cart
 function updateCart(){
     localStorage.setItem('cart',JSON.stringify(cart));
 }

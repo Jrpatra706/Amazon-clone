@@ -1,4 +1,4 @@
-import { cart,deleteFromCart } from "../data/cart.js";
+import { cart,deleteFromCart,updateDeliveryOption } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { moneyReflect } from "./utils/money.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
@@ -95,7 +95,9 @@ function deliveryOptionsHtml(matchingProduct,cItem){
     :`$${moneyReflect(deliveryOption.priceCents)} -`;
     const isChecked = deliveryOption.id === cItem.deliveryOptionId;
 
-    html += `<div class="delivery-option">
+    html += `<div class="delivery-option js-delivery-option"
+    data-product-id="${matchingProduct.id}"
+    data-delivery-option-id="${deliveryOption.id}">
               <input type="radio"
               ${isChecked?'checked':''}
               class="delivery-option-input"
@@ -113,3 +115,12 @@ function deliveryOptionsHtml(matchingProduct,cItem){
   });
   return html;
 }
+
+// changing delivery date on selecting radio button
+document.querySelectorAll('.js-delivery-option')
+  .forEach((element)=>{
+    element.addEventListener('click',()=>{
+      const {productId,deliveryOptionId} = element.dataset;
+      updateDeliveryOption(productId,deliveryOptionId);
+    });
+  });

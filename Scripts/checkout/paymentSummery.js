@@ -23,7 +23,7 @@ export function renderPaymentSummary(){
     const totalBeforeTax = shipping+productPriceCents;
     const estimatedTax = totalBeforeTax*(0.1);
     const totalCents = totalBeforeTax+estimatedTax;
-
+    const cartSize = cart.length;
     // will work on view of mvc(display html)
     const paymentSummaryHtml =`
         <div class="payment-summary-title">
@@ -31,7 +31,7 @@ export function renderPaymentSummary(){
         </div>
 
         <div class="payment-summary-row">
-            <div>Items (3):</div>
+            <div>Items (${cartSize}):</div>
             <div class="payment-summary-money">
                 $${moneyReflect(productPriceCents)}
             </div>
